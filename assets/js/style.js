@@ -4,6 +4,7 @@ var cityEl = document.querySelector("#city-name");
 var searchCityEl = document.querySelector("#city-search-term");
 var apiKey = "2b9fd3a7d8e988ae12d2bbef3e2f64cf";
 
+
 var formSubmitHandler = function() {
     // prevent page from refreshing
     event.preventDefault();
@@ -24,28 +25,19 @@ var getLocationData = function(city) {
             const lon = data[0].lon;
             const city = data[0].name;
 
-            console.log(data);
-            console.log(lat);
-            console.log(lon);
-            console.log(city);
-
            getCurrentWeather(lat, lon, city);
         });
 
     });
 };
 
-
-
 var getCurrentWeather = function(lat, lon, city) {
     let today = new Date();
-    let dd = String(today.getDate()).padStart(2, '0');
-    let mm = String(today.getMonth() + 1).padStart(2, '0');
-    let yyyy = today.getFullYear();
+    const dd = String(today.getDate()).padStart(2, '0');
+    const mm = String(today.getMonth() + 1).padStart(2, '0');
+    const yyyy = today.getFullYear();
 
     today = mm + '/' + dd + '/' + yyyy;
-    console.log(today);
-
     var weatherApiUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&appid=${apiKey}&units=imperial`;
 
     fetch(weatherApiUrl).then(function(response) {
@@ -55,33 +47,25 @@ var getCurrentWeather = function(lat, lon, city) {
             var windSpeed = data.current.wind_speed;
             var uvIndex = data.daily[0].uvi;
 
-            console.log(data);
-            console.log("temp: " + temp);
-            console.log("humidity: " + humidity);
-            console.log("wind speed: " + windSpeed);
-            console.log("uvi: " + uvIndex);
-
 
             // display city, date and icon
             let cityNameEl = document.createElement("h2");
             cityNameEl.textContent = city + " (" + today + ") **INSERT ICON HERE**";
-            console.log(cityNameEl);
-
             // display temp
             let tempEl = document.createElement("p");
-            tempEl.textContent = temp + " F";
+            tempEl.textContent = "Temperature: " + temp + " F";
 
             // display humidity
             let humidityEl = document.createElement("p");
-            humidityEl.textContent = humidity + "%";
+            humidityEl.textContent = "Humidity: " + humidity + "%";
 
             // display wind speed
             let windSpeedEl = document.createElement("p");
-            windSpeedEl.textContent = windSpeed + " mph";
+            windSpeedEl.textContent = "Wind Speed: " + windSpeed + " mph";
 
             // display uv index
             let uvIndexEl = document.createElement("p");
-            uvIndexEl.textContent = uvIndex;
+            uvIndexEl.textContent = "UV Index: " + uvIndex;
 
             cityContainerEl.appendChild(cityNameEl);
             cityContainerEl.appendChild(tempEl);
@@ -90,10 +74,39 @@ var getCurrentWeather = function(lat, lon, city) {
             cityContainerEl.appendChild(uvIndexEl);
 
             // 5-DAY Forecast
-            // Date
-            // Icon
-            // Temp
-            // Humidity
+            for (var i = 1; i < 6; i++) {
+                // forecast day elements
+                let forecastEl = document.querySelector("#forecast-" + i);                let forecastDay = data.daily[i];
+
+                // current date
+                let timestamp = forecastDay.dt;
+                let milli = timestamp * 1000;
+                let date = new Date(milli);
+                const day = String(date.getDate()).padStart(2, '0');
+                const month = String(date.getMonth() + 1).padStart(2, '0');
+                const year = date.getFullYear();
+
+                date = month + '/' + day + '/' + year;
+
+                let dateEl = document.createElement("h4");
+                dateEl.textContent = date;
+
+                // Icon
+
+                // Temp
+                let dailyTemp = forecastDay.temp.day;
+                let dailyTempEl = document.createElement("h5");
+                dailyTempEl.textContent = dailyTemp + " F";
+
+                // Humidity
+                let dailyHumidity = forecastDay.humidity;
+                let dailyHumidityEl = document.createElement("h5");
+                dailyHumidityEl.textContent = dailyHumidity;
+
+                forecastEl.appendChild(dateEl);
+                forecastEl.appendChild(dailyTempEl);
+                forecastEl.appendChild(dailyHumidityEl)
+            };
         });
     });
 };
