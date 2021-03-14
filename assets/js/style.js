@@ -83,16 +83,18 @@ var getCurrentWeather = function(lat, lon, city) {
             let uvIndexEl = document.createElement("p");
             let uvIndexSpan = document.createElement("span");
 
-            uvIndexEl.textContent = "UV Index: " + uvIndex;
-            uvIndex.textContent = uvIndex;
+            uvIndexSpan.textContent = uvIndex;
+            uvIndexEl.textContent = "UV Index: ";
 
-            uvIndexIndicator(uvIndex);
+
+            uvIndexIndicator(uvIndexSpan);
 
             cityContainerEl.appendChild(cityNameEl);
             cityNameEl.appendChild(iconEl);
             cityContainerEl.appendChild(tempEl);
             cityContainerEl.appendChild(humidityEl);
             cityContainerEl.appendChild(windSpeedEl);
+            uvIndexEl.appendChild(uvIndexSpan);
             cityContainerEl.appendChild(uvIndexEl);
 
             // 5-DAY Forecast
