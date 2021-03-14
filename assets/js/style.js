@@ -3,7 +3,13 @@ var cityContainerEl = document.querySelector("#city-container");
 var cityEl = document.querySelector("#city-name");
 var searchCityEl = document.querySelector("#city-search-term");
 var apiKey = "2b9fd3a7d8e988ae12d2bbef3e2f64cf";
+var searchedCitiesContainer = document.querySelector("#searched-cities-container");
 
+var searchedCities = [];
+
+var deleteEl = function() {
+
+};
 
 var formSubmitHandler = function() {
     // prevent page from refreshing
@@ -11,6 +17,7 @@ var formSubmitHandler = function() {
 
     // get value from input element
     var city = cityEl.value.trim();
+    saveSearchedCities(city);
 
     getLocationData(city);
     cityEl.value = "";
@@ -111,12 +118,28 @@ var getCurrentWeather = function(lat, lon, city) {
     });
 };
 
+var saveSearchedCities = function(city) {
+    var savedCitiesBtn = document.createElement("button")
+    savedCitiesBtn.textContent= city;
+
+    searchedCitiesContainer.appendChild(savedCitiesBtn);
+    searchedCities.push(city);
+
+    console.log(searchedCities);
+
+    savedCitiesBtn.addEventListener("click", function() {
+        deleteEl();
+        getLocationData(city);
+    });
+
+    localStorage.setItem("searchedCities", JSON.stringify(searchedCities));
+};
+
+
 
 cityFormEl.addEventListener("submit", formSubmitHandler);
 
 // GIVEN a weather dashboard with form inputs
-// WHEN I search for a city
-// THEN I am presented with current and future conditions for that city and that city is added to the search history
 // WHEN I view current weather conditions for that city
 // THEN I am presented with the city name, the date, an icon representation of weather conditions, the temperature, the humidity, the wind speed, and the UV index
 // WHEN I view the UV index
