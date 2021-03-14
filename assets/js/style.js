@@ -2,6 +2,7 @@ var cityFormEl = document.querySelector("#city-form");
 var cityContainerEl = document.querySelector("#city-container");
 var cityEl = document.querySelector("#city-name");
 var searchCityEl = document.querySelector("#city-search-term");
+var apiKey = "2b9fd3a7d8e988ae12d2bbef3e2f64cf";
 
 var formSubmitHandler = function() {
     // prevent page from refreshing
@@ -10,52 +11,91 @@ var formSubmitHandler = function() {
     // get value from input element
     var city = cityEl.value.trim();
 
-    if (city) {
-        getCurrentWeather(city);
-
-        // clear old content
-        cityContainerEl.textContent = "";
-        cityEl.value = "";
-    } else {
-        alert("Please enter a city");
-    }
+    getLocationData(city);
+    cityEl.value = "";
 };
 
-var getCurrentWeather = function(city) {
-    // format the open weather api url
-    var apiUrl = "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=2b9fd3a7d8e988ae12d2bbef3e2f64cf";
+var getLocationData = function(city) {
+    const locApiUrl = `https://api.openweathermap.org/geo/1.0/direct?q=${city}&appid=${apiKey}`;
 
-    // make a get request to url
-    fetch(apiUrl)
-      .then(function(response) {
-        // request was successful
-        if (response.ok) {
-            console.log(response);
-            response.json().then(function(data) {
-            displayCurrentWeather(city);
-            });
-        } else {
-          alert("Error: " + response.statusText);
-        }
-    })
-        .catch(function(error) {
-            alert("Unable to connect to Open Weather");
+    fetch(locApiUrl).then(function(response) {
+        response.json().then(function(data) {
+            const lat = data[0].lat;
+            const lon = data[0].lon;
+            const city = data[0].name;
+
+            console.log(data);
+            console.log(lat);
+            console.log(lon);
+            console.log(city);
+
+           getCurrentWeather(lat, lon, city);
+        });
+
     });
 };
 
-var displayCurrentWeather = function(city) {
-    searchCityEl.textContent = city;
 
-    // city name
-    var cityNameEl = document.createElement("h2");
-    cityNameEl = cityEl.value.trim();
-    console.log(cityNameEl);
-    cityContainerEl.appendChild(cityNameEl);
 
-    // temperature
-    // humidity
-    // wind speed
-    // UV index
+var getCurrentWeather = function(lat, lon, city) {
+    let today = new Date();
+    let dd = String(today.getDate()).padStart(2, '0');
+    let mm = String(today.getMonth() + 1).padStart(2, '0');
+    let yyyy = today.getFullYear();
+
+    today = mm + '/' + dd + '/' + yyyy;
+    console.log(today);
+
+    var weatherApiUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&appid=${apiKey}&units=imperial`;
+
+    fetch(weatherApiUrl).then(function(response) {
+        response.json().then(function(data) {
+            var temp = data.current.temp;
+            var humidity = data.current.humidity;
+            var windSpeed = data.current.wind_speed;
+            var uvIndex = data.daily[0].uvi;
+
+            console.log(data);
+            console.log("temp: " + temp);
+            console.log("humidity: " + humidity);
+            console.log("wind speed: " + windSpeed);
+            console.log("uvi: " + uvIndex);
+
+
+            // display city, date and icon
+            let cityNameEl = document.createElement("h2");
+            cityNameEl.textContent = city + " (" + today + ") **INSERT ICON HERE**";
+            console.log(cityNameEl);
+
+            // display temp
+            let tempEl = document.createElement("p");
+            tempEl.textContent = temp + " F";
+
+            // display humidity
+            let humidityEl = document.createElement("p");
+            humidityEl.textContent = humidity + "%";
+
+            // display wind speed
+            let windSpeedEl = document.createElement("p");
+            windSpeedEl.textContent = windSpeed + " mph";
+
+            // display uv index
+            let uvIndexEl = document.createElement("p");
+            uvIndexEl.textContent = uvIndex;
+
+            cityContainerEl.appendChild(cityNameEl);
+            cityContainerEl.appendChild(tempEl);
+            cityContainerEl.appendChild(humidityEl);
+            cityContainerEl.appendChild(windSpeedEl);
+            cityContainerEl.appendChild(uvIndexEl);
+
+            // 5-DAY Forecast
+            // Date
+            // Icon
+            // Temp
+            // Humidity
+        });
+    });
 };
 
 
