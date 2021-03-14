@@ -5,37 +5,36 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Weather Dashboard</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+    <link type="text/css" rel="stylesheet" href="./assets/css/style.css">
 </head>
 <body>
     <header class="jumbotron">
         <h1 class="app-title">Weather Dashboard</h1>
     </header>
 
-    <main class="flex-row justify-space-between">
-        <div class="col-12 col-md-4">
-            <div class="card">
-                <h3 class="card-header">Search by a city:</h3>
-                <form id="city-form" class="card-body">
-                    <label class="form-label" for="city-name">City Name</label>
-                    <input name="city-name" id="city-name" type="text" autofocus="true" class="form-input" />
-                    <button type="submit" class="btn">Search!</button>
-                </form>
-            </div>
+    <main>
+        <div>
+            <h3>Search by a city:</h3>
+            <form id="city-form">
+                <label class="form-label" for="city-name">City Name</label>
+                <input name="city-name" id="city-name" type="text" autofocus="true" class="form-input" />
+                <button type="submit" class="btn">Search!</button>
+            </form>
+        </div>
 
-            <h3 class="card-header">Previously Searched Cities</h3>
+        <div>
+            <h3>Previously Searched Cities</h3>
             <div id="searched-cities-container">
             </div>
         </div>
 
-        <div class="col-12 col-md-8 city-weather">
-            <div id="city-container" class="list-group">
-
+        <div>
+            <div id="city-container">
             </div>
         </div>
 
-        <div class="col-12 col-md-8 5-day-forecast container">
-            <h2 class="subtitle">5-Day Forecast:</h2>
+        <div class="5-day-forecast container">
+            <h2>5-Day Forecast:</h2>
             <div id="5-day-forecast-container" class="row">
                 <div id="forecast-1"></div>
                 <div id="forecast-2"></div>
@@ -46,7 +45,6 @@
         </div>
     </main>
 
-    <script src="https://kit.fontawesome.com/4f5e67ec89.js" crossorigin="anonymous"></script>
     <script src="./assets/js/style.js"></script>
 </body>
 </html>
