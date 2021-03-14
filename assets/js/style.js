@@ -7,8 +7,13 @@ var searchedCitiesContainer = document.querySelector("#searched-cities-container
 
 var searchedCities = [];
 
-var deleteEl = function() {
+var reset = function() {
+    cityContainerEl.innerHTML = '';
 
+    for (var i=1; i < 6; i++) {
+        var forecastDivs = document.querySelector("#forecast-" + i)
+        forecastDivs.innerHTML = '';
+    }
 };
 
 var formSubmitHandler = function() {
@@ -20,6 +25,7 @@ var formSubmitHandler = function() {
     saveSearchedCities(city);
 
     getLocationData(city);
+    reset();
     cityEl.value = "";
 };
 
@@ -128,7 +134,7 @@ var saveSearchedCities = function(city) {
     console.log(searchedCities);
 
     savedCitiesBtn.addEventListener("click", function() {
-        deleteEl();
+        reset();
         getLocationData(city);
     });
 
