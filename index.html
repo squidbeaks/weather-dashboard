@@ -13,35 +13,38 @@
         <h1 class="app-title">Weather Dashboard</h1>
     </header>
 
-    <main>
-        <div class="container">
-            <h3>Search by a City:</h3>
-            <form id="city-form">
-                <label class="form-label" for="city-name">Enter City Name:</label>
-                <input name="city-name" id="city-name" type="text" autofocus="true" class="form-input" />
-                <button type="submit" class="btn">Search</button>
-            </form>
-        </div>
+    <main class="container">
+        <div class="row">
+            <div class="col-4">
+                <h3>Search by a City:</h3>
+                <form id="city-form">
+                    <label class="form-label" for="city-name">Enter City Name:</label>
+                    <input name="city-name" id="city-name" type="text" autofocus="true" class="form-input" />
+                    <button type="submit" class="btn btn-info">Search</button>
+                </form>
 
-        <div class="container">
-            <h2>Previously Searched Cities</h3>
-            <div id="searched-cities-container">
+                <div>
+                    <h4>Previously Searched Cities</h3>
+                    <div id="searched-cities-container" class="list-group"></div>
+                </div>
             </div>
-        </div>
 
-        <div>
-            <div id="city-container" class="container">
-            </div>
-        </div>
+            <div class="col">
+                <div id="city-container">
+                </div>
 
-        <div class="container 5-day-forecast">
-            <h2>5-Day Forecast:</h2>
-            <div id="5-day-forecast-container" class="row">
-                <div id="forecast-1" class="col"></div>
-                <div id="forecast-2" class="col"></div>
-                <div id="forecast-3" class="col"></div>
-                <div id="forecast-4" class="col"></div>
-                <div id="forecast-5" class="col"></div>
+                <div class="container">
+                    <div id="five-day-forecast-container">
+                        <div class="row">
+                            <div id="header-container"></div>
+                            <div id="forecast-1" class="col"></div>
+                            <div id="forecast-2" class="col"></div>
+                            <div id="forecast-3" class="col"></div>
+                            <div id="forecast-4" class="col"></div>
+                            <div id="forecast-5" class="col"></div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </main>

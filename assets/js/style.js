@@ -4,11 +4,13 @@ const cityEl = document.querySelector('#city-name');
 const searchCityEl = document.querySelector('#city-search-term');
 const apiKey = '2b9fd3a7d8e988ae12d2bbef3e2f64cf';
 const searchedCitiesContainer = document.querySelector('#searched-cities-container');
+const headerContainerEl = document.querySelector('#header-container');
 
 let searchedCities = [];
 
 function reset() {
     cityContainerEl.innerHTML = '';
+    headerContainerEl.innerHTML = '';
 
     for (var i=1; i < 6; i++) {
         var forecastDivs = document.querySelector('#forecast-' + i)
@@ -104,6 +106,12 @@ function getCurrentWeather(lat, lon, city) {
             uvIndexIndicator(uvIndex);
 
             // 5-DAY Forecast
+            // header
+            let forecastHeader = document.createElement('h2');
+            forecastHeader.innerText = '5-Day Forecast:';
+
+            headerContainerEl.appendChild(forecastHeader);
+
             for (var i = 1; i < 6; i++) {
                 // forecast day elements
                 let forecastEl = document.querySelector('#forecast-' + i);
@@ -162,6 +170,7 @@ function uvIndexIndicator(uvIndex) {
 
 function saveSearchedCities(city) {
     let savedCitiesBtn = document.createElement('button');
+    savedCitiesBtn.classList = "btn btn-info list-group-item list-group-item-action";
     savedCitiesBtn.innerText = city;
 
     searchedCitiesContainer.appendChild(savedCitiesBtn);
@@ -185,6 +194,7 @@ function loadSearchedCities() {
     for(let i = 0; i < searchedCities.length; i++) {
         let searchedCity = searchedCities[i];
         let savedCitiesBtn = document.createElement('button');
+        savedCitiesBtn.classList = "btn btn-info list-group-item list-group-item-action";
         savedCitiesBtn.innerText = searchedCity;
 
         searchedCitiesContainer.appendChild(savedCitiesBtn);
