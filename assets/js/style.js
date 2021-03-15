@@ -84,10 +84,8 @@ var getCurrentWeather = function(lat, lon, city) {
             let uvIndexSpan = document.createElement("span");
 
             uvIndexSpan.textContent = uvIndex;
+            uvIndexSpan.id = "uv-index-span";
             uvIndexEl.textContent = "UV Index: ";
-
-
-            uvIndexIndicator(uvIndexSpan);
 
             cityContainerEl.appendChild(cityNameEl);
             cityNameEl.appendChild(iconEl);
@@ -96,6 +94,8 @@ var getCurrentWeather = function(lat, lon, city) {
             cityContainerEl.appendChild(windSpeedEl);
             uvIndexEl.appendChild(uvIndexSpan);
             cityContainerEl.appendChild(uvIndexEl);
+
+            uvIndexIndicator(uvIndex);
 
             // 5-DAY Forecast
             for (var i = 1; i < 6; i++) {
@@ -163,23 +163,26 @@ var saveSearchedCities = function(city) {
 };
 
 var uvIndexIndicator = function(uvIndex) {
+    let uvIndexSpanEl = document.querySelector("#uv-index-span");
+    console.log(uvIndexSpanEl);
+
     // favorable 0-2
     if (uvIndex >= 0 && uvIndex < 3) {
         console.log('favorable');
+        uvIndexSpanEl.className = "favorable";
     }
     // moderate 3-5
     else if (uvIndex >= 3 && uvIndex < 5) {
         console.log("moderate");
+        uvIndexSpanEl.className = "moderate";
     }
     // severe 8-10
     else {
         console.log("severe");
+        uvIndexSpanEl.className = "severe";
     }
 };
 
 cityFormEl.addEventListener("submit", formSubmitHandler);
 
-// GIVEN a weather dashboard with form inputs
-// WHEN I view the UV index
-// THEN I am presented with a color that indicates whether the conditions are favorable, moderate, or severe
 // localStorage
