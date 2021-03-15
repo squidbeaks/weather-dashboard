@@ -1,0 +1,26 @@
+body {
+    background-color: #6f42c1;
+    color: white;
+}
+
+header {
+    background-color: darkslateblue;
+    text-align: center;
+}
+
+img {
+    max-width: 80px;
+    height: auto
+}
+
+.favorable {
+    color: green
+}
+
+.moderate {
+    color: yellow
+}
+
+.severe {
+    color: red
+}
